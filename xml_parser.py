@@ -1,4 +1,5 @@
 # Created by Massimo Di Pierro @ 2015
+# https://github.com/mdipierro/xml_parser
 # License: BSDv3
 
 import xml.etree.ElementTree as ET

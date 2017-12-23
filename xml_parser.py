@@ -43,9 +43,9 @@ class XMLParser(object):
         if n == 0:
             return self.parse_text(items.text)
         else:
-            tags = [obj.tag for obj in children]
+            tags = [obj.tag.split('}',1)[-1] for obj in children]
             for obj in children:
-                tag = obj.tag
+                tag = obj.tag.split('}',1)[-1]
                 parsed = self.parse_rec(obj)
                 if tags.count(tag) == 0:
                     node[tag] = parsed

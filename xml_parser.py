@@ -36,6 +36,8 @@ class XMLParser(object):
                 return float(text)
             except:
                 return d.get(text.lower(), text)
+    def no_prefix(self, tag):
+        return tag.split('}',1)[-1]
     def parse_rec(self, items):
         node = collections.OrderedDict()
         children = items.getchildren()
@@ -43,9 +45,9 @@ class XMLParser(object):
         if n == 0:
             return self.parse_text(items.text)
         else:
-            tags = [obj.tag.split('}',1)[-1] for obj in children]
+            tags = [self.no_prefix(obj.tag) for obj in children]
             for obj in children:
-                tag = obj.tag.split('}',1)[-1]
+                tag = self.no_prefix(obj.tag)
                 parsed = self.parse_rec(obj)
                 if tags.count(tag) == 0:
                     node[tag] = parsed
@@ -56,7 +58,7 @@ class XMLParser(object):
         return node
     def parse(self):
         obj = collections.OrderedDict()
-        obj[self.soup.tag] = self.parse_rec(self.soup)
+        obj[self.no_prefix(self.soup.tag)] = self.parse_rec(self.soup)
         return obj
     def to_json(self):
         return json.dumps(self.parse())

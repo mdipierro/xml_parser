@@ -19,7 +19,7 @@ example = """<?xml version="1.0"?>
 </A>
 """
 
-example_json = '{"A": {"B": [{"E": ["Hello"]}], "C": [{"D": [true, 2, 3.1]}]}}'
+example_json = '{"A": {"B": {"E": "Hello"}, "C": {"D": [true, 2, 3.1]}}}'
 
 class XMLParser(object):
     def __init__(self, xml):
@@ -55,6 +55,9 @@ class XMLParser(object):
                     if not tag in node:
                         node[tag] = []
                     node[tag].append(parsed)
+            for tag in tags:
+                if len(node[tag]) == 1:
+                    node[tag] = node[tag][0]
         return node
     def parse(self):
         obj = collections.OrderedDict()

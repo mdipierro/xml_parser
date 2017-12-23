@@ -25,6 +25,8 @@ class XMLParser(object):
     def __init__(self, xml):
         self.soup = ET.fromstring(xml)
     def parse_text(self, text):
+        if not text: 
+            return text
         d = {'true':True, 'false':False}
         text = text.strip()
         try:            
